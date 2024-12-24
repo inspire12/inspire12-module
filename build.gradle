@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5' apply false
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+allprojects {
+    group = 'com.inspire12'
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    group = 'com.inspire12'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+    compileJava.options.encoding = 'UTF-8'
+
+    dependencies {
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+}
+
+project(":inspire12-common") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencies {
+        implementation('org.projectlombok:lombok')
+        implementation('org.springframework.boot:spring-boot-starter')
+        implementation('org.springframework.boot:spring-boot-starter-logging')
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+    }
+}
+
+
+project(":inspire12-api") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+
+    dependencies {
+        implementation project(":inspire12-common")
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+    }
+}
+
+
+project(":inspire12-gateway") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencies {
+        implementation project(":inspire12-common")
+        implementation('org.springframework.boot:spring-boot-starter-web')
+        compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+    }
+}
+
+
+project(":inspire12-push-server") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+
+    dependencies {
+        implementation project(":inspire12-common")
+        implementation('org.springframework.boot:spring-boot-starter-batch')
+
+        compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+    }
+}

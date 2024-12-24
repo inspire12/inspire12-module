@@ -1,0 +1,6 @@
+rootProject.name = 'inspire12-module'
+
+include 'inspire12-common'
+include 'inspire12-gateway'
+include 'inspire12-push-server'
+include 'inspire12-api'
